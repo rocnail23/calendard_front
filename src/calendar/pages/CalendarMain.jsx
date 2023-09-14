@@ -1,12 +1,12 @@
 import { Calendar} from 'react-big-calendar'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import {addHours} from 'date-fns'
 import "react-big-calendar/lib/css/react-big-calendar.css"
 import { Messages, localizer } from '../../helper'
 import CalendarEvent from '../components/CalendarEvent'
 import { ModalCalendar } from '../components/ModalCalendar'
-import { useUi ,useCalendar} from '../../hooks'
+import { useUi ,useCalendar, useAuth} from '../../hooks'
 import OpenBtn from '../components/openBtn'
 import DeleteBtn from '../components/deleteBtn'
 
@@ -18,12 +18,18 @@ export const CalendarMain = () => {
 
   const [lastView, setLastView] = useState(localStorage.getItem("view") || "week")
   const {openModalHook} = useUi()
-  const {notes:Events,selectEvent} = useCalendar()
+  const {events,selectEvent,startGetEvents} = useCalendar()
+  const {user:actualUser} = useAuth()
 
-  const getStyle = ({end,start,title}) => {
+  useEffect(() => {
+    startGetEvents()
+},[])
 
+  const getStyle = ({user}) => {
+
+    
     const style = {
-      backgroundColor: "#347cf7",
+      backgroundColor: user._id == actualUser.uid ? "#347cf7": "rgb(255, 0, 0)",
       borderRadius: "0px",
       opacity: 0.8,
       color: "white"
@@ -59,7 +65,7 @@ export const CalendarMain = () => {
       culture='es'
       defaultView={lastView}
       localizer={localizer}
-      events={Events}
+      events={events}
       startAccessor="start"
       endAccessor="end"
       style={{ height: "calc(100vh - 80px)"}}

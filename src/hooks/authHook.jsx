@@ -33,7 +33,8 @@ export const useAuth = () => {
 
             dispatch(login({
                name: res.data.name,
-               token: res.data.token
+               token: res.data.token,
+               uid: res.data.uid
             }))
 
             console.log(res.data)

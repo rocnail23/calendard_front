@@ -1,9 +1,15 @@
 import React from 'react'
-import { useAuth } from '../../hooks'
+import { useAuth, useCalendar } from '../../hooks'
 
 const Navbar = () => {
 
   const {logoutUser,user} = useAuth()
+  const {clearEvents} = useCalendar()
+
+  const logout = () => {
+    logoutUser()
+    clearEvents()
+  }
 
   return (
     <div className='navbar navbar-dark bg-dark mb-4 px-4'>
@@ -13,7 +19,7 @@ const Navbar = () => {
             {user.name}
         </span>
 
-        <button onClick={logoutUser} className='btn btn-outline-danger'>
+        <button onClick={logout} className='btn btn-outline-danger'>
             <i className='fas fa-sign-out-alt'></i>
             &nbsp;
             <span>Salir</span>

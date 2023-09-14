@@ -18,8 +18,8 @@ const events = {
 const calendarSlice = createSlice({
 name: 'name',
 initialState: {
-    notes: [
-        events
+    events: [
+        
     ],
     activeEvent: null
 },
@@ -29,19 +29,27 @@ reducers: {
     },
 
     newEvent: (state,action) => {
-      state.notes.push(action.payload)
+      state.events.push(action.payload)
     },
     
     editEvent: (state,action) => {
       console.log(action.payload)
       console.log("este es el evento")
-      state.notes = state.notes.map(event => event._id == action.payload._id ? action.payload : event)
+      state.events = state.events.map(event => event.id == action.payload.id ? action.payload : event)
     },
     deleteEvent: (state, action) => {
-      state.notes = state.notes.filter(note =>  note._id != state.activeEvent._id)
+      state.events = state.events.filter(note =>  note.id != state.activeEvent.id)
+    },
+    setEvents: (state,action) => {
+      state.events = action.payload
+    },
+    resetEvents: (state) => {
+      state.events= []
+      state.activeEvent = null
+
     }
 }});
 
 
-export const { setEvent, newEvent,editEvent,deleteEvent} = calendarSlice.actions;
+export const { setEvent, newEvent,editEvent,deleteEvent,setEvents,resetEvents} = calendarSlice.actions;
 export default calendarSlice.reducer
