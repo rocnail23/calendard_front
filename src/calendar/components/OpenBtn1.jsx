@@ -1,7 +1,7 @@
 import React from 'react'
 import { useUi } from '../../hooks'
 
-const OpenBtn = () => {
+const OpenBtn1 = () => {
 
     const {openModalHook} = useUi()
 
@@ -14,4 +14,4 @@ const OpenBtn = () => {
   )
 }
 
-export default OpenBtn
+export default OpenBtn1

@@ -7,7 +7,7 @@ import { Messages, localizer } from '../../helper'
 import CalendarEvent from '../components/CalendarEvent'
 import { ModalCalendar } from '../components/ModalCalendar'
 import { useUi ,useCalendar, useAuth} from '../../hooks'
-import OpenBtn from '../components/openBtn'
+import OpenBtn from '../components/OpenBtn1'
 
 
 
