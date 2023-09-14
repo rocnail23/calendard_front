@@ -5,10 +5,9 @@ import es from 'date-fns/locale/es';
 
 import "react-datepicker/dist/react-datepicker.css";
 import { addHours } from 'date-fns';
-import { differenceInHours } from 'date-fns';
 import { differenceInMinutes } from 'date-fns';
 import { useCalendar, useUi } from '../../hooks';
-import DeleteBtn from './deleteBtn';
+import DeleteBtn from './DeleteBtn';
 
 registerLocale("es",es)
 
