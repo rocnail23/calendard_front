@@ -1,8 +1,11 @@
+
+import { StaleWhileRevalidate} from 'workbox-strategies';
+import {registerRoute, Route} from 'workbox-routing';
 import {precacheAndRoute} from 'workbox-precaching';
 
 // Precache the manifest
 precacheAndRoute(self.__WB_MANIFEST);
-console.log("hola")
+
 // Enable navigation preload
 
 
@@ -17,6 +20,11 @@ console.log("hola")
 // Create a route for image, script, or style requests that use a
 // stale-while-revalidate strategy. This route will be unaffected
 // by navigation preload.
-
+const staticAssetsRoute = new Route(({request}) => {
+  return ['image', 'script', 'style'].includes(request.destination);
+}, new StaleWhileRevalidate({
+  cacheName: 'static-assets'
+}));
 
 // Register the route handling static assets
+registerRoute(staticAssetsRoute);
