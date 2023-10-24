@@ -5,7 +5,7 @@ import {precacheAndRoute} from 'workbox-precaching';
 
 // Precache the manifest
 precacheAndRoute(self.__WB_MANIFEST);
-
+console.log("hola")
 // Enable navigation preload
 
 
