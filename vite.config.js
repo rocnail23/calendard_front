@@ -10,7 +10,7 @@ export default defineConfig({
            strategies:"injectManifest",
            srcDir:"src",
            filename:"my-sw.js",
-
+            
             manifest: {
                 "theme_color": "#f69435",
                 "background_color": "#f69435",
