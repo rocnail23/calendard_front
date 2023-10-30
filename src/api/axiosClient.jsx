@@ -4,7 +4,7 @@ import {getEnv} from "../helper"
 const {VITE_API_URL} = getEnv()
 
 const axiosClient = axios.create({
-    baseURL: VITE_API_URL
+    baseURL: "http://localhost:4000/app/v1"
 })
 
 

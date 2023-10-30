@@ -8,10 +8,11 @@ export default defineConfig({
         react(),
         VitePWA({
            strategies:"injectManifest",
+           registerType:"autoUpdate",
            srcDir:"src",
            filename:"my-sw.js",
            injectManifest:{
-            globPatterns:["**\/*.{js,css,html}"]
+            globPatterns: ["**/*.{js,css,html}"]
            },
             manifest: {
                 "theme_color": "#f69435",

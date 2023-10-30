@@ -1,30 +1,73 @@
-
-import { StaleWhileRevalidate} from 'workbox-strategies';
-import {registerRoute, Route} from 'workbox-routing';
-import {precacheAndRoute} from 'workbox-precaching';
+import {cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute} from 'workbox-precaching';
+import { NavigationRoute, registerRoute } from 'workbox-routing';
+import {clientsClaim} from "workbox-core"
+import { NetworkFirst, NetworkOnly } from 'workbox-strategies';
+import {BackgroundSyncPlugin} from 'workbox-background-sync';
 
 // Precache the manifest
+cleanupOutdatedCaches()
+
 precacheAndRoute(self.__WB_MANIFEST);
 
-// Enable navigation preload
 
 
-// Create a new navigation route that uses the Network-first, falling back to
-// cache strategy for navigation requests with its own cache. This route will be
-// handled by navigation preload. The NetworkOnly strategy will work as well.
+let allowlist;
+if (import.meta.env.DEV)
+  allowlist = [/^\/$/]
+
+// to allow work offline
+registerRoute(new NavigationRoute(
+  createHandlerBoundToURL('index.html'),
+  { allowlist }
+))
+
+
+const bgSyncPlugin = new BackgroundSyncPlugin('events', {
+  maxRetentionTime: 24 * 60, // Retry for max of 24 Hours (specified in minutes)
+});
+
+registerRoute(
+ new RegExp("http://localhost:4000/app/v1/events"),
+  new NetworkOnly({
+    plugins: [bgSyncPlugin],
+  }),
+  'POST'
+);
+
+
+registerRoute(new RegExp("http://localhost:4000/app/v1/auth/renew"),
+new NetworkFirst())
+
+registerRoute(new RegExp("http://localhost:4000/app/v1/events"),
+new NetworkFirst())
+
+self.addEventListener("fetch", (event) => {
+
+  const assets = ["https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css","https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"]
+
+  if(!assets.includes(event.request.url)) return
+
+  
+  fetch(event.request)
+  .then(res =>  caches.open("dynamic").then(cache => cache.put(event.request, res)))
+  .catch(err => console.log(err))
+  
+  
+
+
+  event.respondWith(caches.match(event.request) || fetch(event.request))
+  
+})
+
 
 
 // Register the navigation route
-
+self.skipWaiting()
+clientsClaim()
 
 // Create a route for image, script, or style requests that use a
 // stale-while-revalidate strategy. This route will be unaffected
 // by navigation preload.
-const staticAssetsRoute = new Route(({request}) => {
-  return ['image', 'script', 'style'].includes(request.destination);
-}, new StaleWhileRevalidate({
-  cacheName: 'static-assets'
-}));
+
 
 // Register the route handling static assets
-registerRoute(staticAssetsRoute);
