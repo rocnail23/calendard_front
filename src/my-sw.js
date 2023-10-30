@@ -27,7 +27,7 @@ const bgSyncPlugin = new BackgroundSyncPlugin('events', {
 });
 
 registerRoute(
- new RegExp("http://localhost:4000/app/v1/events"),
+ new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
   new NetworkOnly({
     plugins: [bgSyncPlugin],
   }),
@@ -35,10 +35,10 @@ registerRoute(
 );
 
 
-registerRoute(new RegExp("http://localhost:4000/app/v1/auth/renew"),
+registerRoute(new RegExp("https://calendar-z2hf.onrender.com/app/v1/auth/renew"),
 new NetworkFirst())
 
-registerRoute(new RegExp("http://localhost:4000/app/v1/events"),
+registerRoute(new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
 new NetworkFirst())
 
 self.addEventListener("fetch", (event) => {
