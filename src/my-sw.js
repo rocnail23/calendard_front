@@ -29,7 +29,8 @@ const statusPlugin = {
   fetchDidSucceed: ({response}) => {
     if (response.status >= 500) {
       // Throwing anything here will trigger fetchDidFail.
-      throw new Error('Server error.');
+      console.log("this is response")
+      throw response;
     }
     // If it's not 5xx, use the response as-is.
     return response;
