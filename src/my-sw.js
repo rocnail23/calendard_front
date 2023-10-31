@@ -25,13 +25,26 @@ const bgSyncPlugin = new BackgroundSyncPlugin('events', {
   maxRetentionTime: 24 * 60, // Retry for max of 24 Hours (specified in minutes)
 });
 
+const statusPlugin = {
+  fetchDidSucceed: ({response}) => {
+    if (response.status >= 500) {
+      // Throwing anything here will trigger fetchDidFail.
+      throw new Error('Server error.');
+    }
+    // If it's not 5xx, use the response as-is.
+    return response;
+  },
+};
+
+
 registerRoute(
  new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
   
   new NetworkOnly({
-    plugins: [bgSyncPlugin],
+    plugins: [bgSyncPlugin,statusPlugin],
   }),
   'POST'
+
 );
 
 registerRoute(
