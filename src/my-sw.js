@@ -23,9 +23,19 @@ registerRoute(new NavigationRoute(
 
 const bgSyncPlugin = new BackgroundSyncPlugin('events', {
   maxRetentionTime: 24 * 60, 
-  forceSyncFallback: true,
-  onSync: (options) => console.log(options.queue.name) // Retry for max of 24 Hours (specified in minutes)
+ // Retry for max of 24 Hours (specified in minutes)
 });
+
+const bgSyncPlugin1 = new BackgroundSyncPlugin('putevents', {
+  maxRetentionTime: 24 * 60, 
+ // Retry for max of 24 Hours (specified in minutes)
+});
+
+const bgSyncPlugin2 = new BackgroundSyncPlugin('deleteevents', {
+  maxRetentionTime: 24 * 60, 
+ // Retry for max of 24 Hours (specified in minutes)
+});
+
 
 self.addEventListener('sync', function(event) {
  console.log(event)
@@ -58,7 +68,7 @@ registerRoute(
   new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
    
    new NetworkOnly({
-     plugins: [bgSyncPlugin],
+     plugins: [bgSyncPlugin2],
    }),
    'DELETE'
  );
@@ -67,7 +77,7 @@ registerRoute(
   new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
    
    new NetworkOnly({
-     plugins: [bgSyncPlugin],
+     plugins: [bgSyncPlugin1],
    }),
    'PUT'
  );
