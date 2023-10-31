@@ -43,7 +43,7 @@ self.addEventListener('sync', function(event) {
 
 const statusPlugin = {
   fetchDidSucceed: ({response}) => {
-    if (response.status >= 500) {
+    if (response.status == 400) {
       // Throwing anything here will trigger fetchDidFail.
       console.log("this is response")
       throw response;
