@@ -28,7 +28,7 @@ const bgSyncPlugin = new BackgroundSyncPlugin('events', {
 });
 
 self.addEventListener('sync', function(event) {
- console.log("sync activated")
+ console.log(event)
 });
 
 const statusPlugin = {
