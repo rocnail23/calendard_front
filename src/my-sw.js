@@ -55,7 +55,7 @@ const statusPlugin = {
 
 
 registerRoute(
- new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
+ new RegExp("http://localhost:4000/app/v1/events"),
   
   new NetworkOnly({
     plugins: [bgSyncPlugin,statusPlugin],
@@ -65,7 +65,7 @@ registerRoute(
 );
 
 registerRoute(
-  new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
+  new RegExp("http://localhost:4000/app/v1/events"),
    
    new NetworkOnly({
      plugins: [bgSyncPlugin2],
@@ -74,7 +74,7 @@ registerRoute(
  );
 
  registerRoute(
-  new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
+  new RegExp("http://localhost:4000/app/v1/events"),
    
    new NetworkOnly({
      plugins: [bgSyncPlugin1],
@@ -82,10 +82,10 @@ registerRoute(
    'PUT'
  );
 
-registerRoute(new RegExp("https://calendar-z2hf.onrender.com/app/v1/auth/renew"),
+registerRoute(new RegExp("http://localhost:4000/app/v1/auth/renew"),
 new NetworkFirst())
 
-registerRoute(new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
+registerRoute(new RegExp("http://localhost:4000/app/v1/events"),
 new NetworkFirst())
 
 
