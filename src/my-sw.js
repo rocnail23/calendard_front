@@ -23,7 +23,7 @@ registerRoute(new NavigationRoute(
 
 const bgSyncPlugin = new BackgroundSyncPlugin('events', {
   maxRetentionTime: 24 * 60, 
-  onSync: (options) =>  options.queue.registerSync(),
+  onSync: (options) =>  options.queue.pushRequest(options.queue.getAll()),
   forceSyncFallback: true
  // Retry for max of 24 Hours (specified in minutes)
 });
