@@ -35,7 +35,7 @@ registerRoute(
 );
 
 registerRoute(
-  new RegExp(/https:\/\/calendar-z2hf.onrender.com\/app\/v1\/events\/\d*\d$/, "i"),
+  new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
    
    new NetworkOnly({
      plugins: [bgSyncPlugin],
@@ -44,7 +44,7 @@ registerRoute(
  );
 
  registerRoute(
-  new RegExp(/https:\/\/calendar-z2hf.onrender.com\/app\/v1\/events\/\d*\d$/, "i"),
+  new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
    
    new NetworkOnly({
      plugins: [bgSyncPlugin],
