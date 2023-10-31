@@ -65,14 +65,27 @@ self.addEventListener("fetch", (event) => {
   if(!assets.includes(event.request.url)) return
 
   
-  fetch(event.request)
-  .then(res =>  caches.open("dynamic").then(cache => cache.put(event.request, res)))
-  .catch(err => console.log(err))
+  const getDynamic = () => {
+
+  return caches.match(event.request)
+  .then(respond => respond)
+  .err(() => {
+    fetch(event.request)
+    .then(res => {
+      caches.open("dynamic").then(cache => cache.put(event.request,res.clone()))
+      return res
+    }).
+    catch(err => err)
+  })
+  
+
+    
+  }
   
   
 
 
-  event.respondWith(caches.match(event.request) || fetch(event.request))
+  event.respondWith(getDynamic)
   
 })
 
