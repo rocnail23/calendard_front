@@ -1,7 +1,7 @@
 import {cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute} from 'workbox-precaching';
 import { NavigationRoute, registerRoute } from 'workbox-routing';
 import {clientsClaim} from "workbox-core"
-import { NetworkFirst, NetworkOnly } from 'workbox-strategies';
+import { CacheFirst, NetworkFirst, NetworkOnly } from 'workbox-strategies';
 import {BackgroundSyncPlugin} from 'workbox-background-sync';
 
 // Precache the manifest
@@ -58,38 +58,15 @@ new NetworkFirst())
 registerRoute(new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
 new NetworkFirst())
 
-self.addEventListener("fetch", (event) => {
-
-  const assets = ["https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css","https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"]
-
-  if(!assets.includes(event.request.url)) return
-
-  
-  const getDynamic = () => {
-
-  return caches.match(event.request)
-  .then(respond => respond)
-  .err(() => {
-    fetch(event.request)
-    .then(res => {
-      caches.open("dynamic").then(cache => cache.put(event.request,res.clone()))
-      return res
-    }).
-    catch(err => err)
-  })
-  
-
-    
-  }
-  
-  
 
 
-  event.respondWith(getDynamic)
-  
-})
+ 
 
+registerRoute(new RegExp("https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"),
+new CacheFirst())
 
+registerRoute(new RegExp("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"),
+new CacheFirst())
 
 // Register the navigation route
 self.skipWaiting()
