@@ -25,6 +25,10 @@ const bgSyncPlugin = new BackgroundSyncPlugin('events', {
   maxRetentionTime: 24 * 60, // Retry for max of 24 Hours (specified in minutes)
 });
 
+self.addEventListener('sync', function(event) {
+ console.log("sync activated")
+});
+
 const statusPlugin = {
   fetchDidSucceed: ({response}) => {
     if (response.status >= 500) {
