@@ -12,7 +12,8 @@ export default defineConfig({
            srcDir:"src",
            filename:"my-sw.js",
            injectManifest:{
-            globPatterns: ["**/*.{js,css,html}"]
+            globPatterns: ["**/*.{js,css,html}"],
+            
            },
             manifest: {
                 "theme_color": "#f69435",

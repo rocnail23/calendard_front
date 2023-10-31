@@ -23,6 +23,7 @@ registerRoute(new NavigationRoute(
 
 const bgSyncPlugin = new BackgroundSyncPlugin('events', {
   maxRetentionTime: 24 * 60, 
+  onSync: (options) =>  console.log(options.queue)
  // Retry for max of 24 Hours (specified in minutes)
 });
 
@@ -41,24 +42,14 @@ self.addEventListener('sync', function(event) {
  console.log(event)
 });
 
-const statusPlugin = {
-  fetchDidSucceed: ({response}) => {
-    if (response.status == 400) {
-      // Throwing anything here will trigger fetchDidFail.
-      console.log("this is response")
-      throw response;
-    }
-    // If it's not 5xx, use the response as-is.
-    return response;
-  },
-};
+
 
 
 registerRoute(
  new RegExp("http://localhost:4000/app/v1/events"),
   
   new NetworkOnly({
-    plugins: [bgSyncPlugin,statusPlugin],
+    plugins: [bgSyncPlugin],
   }),
   'POST'
 
