@@ -10,7 +10,6 @@ cleanupOutdatedCaches()
 precacheAndRoute(self.__WB_MANIFEST);
 
 
-
 let allowlist;
 if (import.meta.env.DEV)
   allowlist = [/^\/$/]
@@ -28,12 +27,30 @@ const bgSyncPlugin = new BackgroundSyncPlugin('events', {
 
 registerRoute(
  new RegExp("https://calendar-z2hf.onrender.com/app/v1/events"),
+  
   new NetworkOnly({
     plugins: [bgSyncPlugin],
   }),
   'POST'
 );
 
+registerRoute(
+  new RegExp(/https:\/\/calendar-z2hf.onrender.com\/app\/v1\/events\/\d*\d$/, "i"),
+   
+   new NetworkOnly({
+     plugins: [bgSyncPlugin],
+   }),
+   'DELETE'
+ );
+
+ registerRoute(
+  new RegExp(/https:\/\/calendar-z2hf.onrender.com\/app\/v1\/events\/\d*\d$/, "i"),
+   
+   new NetworkOnly({
+     plugins: [bgSyncPlugin],
+   }),
+   'PUT'
+ );
 
 registerRoute(new RegExp("https://calendar-z2hf.onrender.com/app/v1/auth/renew"),
 new NetworkFirst())
